@@ -2,8 +2,8 @@ import { Contact } from "./Contact";
 import { Product } from "./Product";
 
 const Entities = [
-  Product,
-  Contact
+    Product,
+    Contact
 ]
 
 export default Entities

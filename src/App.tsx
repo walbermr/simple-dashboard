@@ -10,90 +10,111 @@ import ConnectionObject from './utils/connectionObject';
 
 function App() {
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [productName, setProductName] = useState<string>('');
-  const [productPrice, setProductPrice] = useState<string>('');
+    const [products, setProducts] = useState<Product[]>([]);
+    const [productName, setProductName] = useState<string>('');
+    const [productPrice, setProductPrice] = useState<string>('');
+    const [count, setCount] = useState(0);
 
-  const [message, setMessage] = useState<string>('');
-  const [responses, setResponses] = useState<any[]>([]);
+    const [message, setMessage] = useState<string>('');
+    const [responses, setResponses] = useState<any[]>([]);
 
-  useEffect(() => {
-    createConnection(ConnectionObject).catch(console.error)
-  }, [])
+    useEffect(() => {
+        createConnection(ConnectionObject).catch(console.error)
+    }, [])
 
-  function send(sql: string) {
-    sendAsync(sql).then((result: any[]) => {
-      console.log({ result })
-      setResponses(result)
-    });
-  }
+    function send(sql: string) {
+        sendAsync(sql).then((result: any[]) => {
+            console.log({ result })
+            setResponses(result)
+        });
+    }
 
-  async function newProduct() {
-    console.log({
-      productName,
-      productPrice
-    })
+    async function newProduct() {
+        console.log({
+            productName,
+            productPrice
+        })
+        
+        const product = new Product()
+        product.name = productName;
+        product.price = Number(productPrice);
+
+        const contact = new Contact()
+        contact.first_name = "Daniel"
+        contact.last_name = "Bergholz"
+        contact.email = "email2"
+        contact.phone = "fone2"
+        
+        getRepository(Product).save(product)
+
+        setProducts(p => [ ...p, product ])
+        setProductName("")
+        setProductPrice("")
+    }
     
-    const product = new Product()
-    product.name = productName;
-    product.price = Number(productPrice);
 
-    const contact = new Contact()
-    contact.first_name = "Daniel"
-    contact.last_name = "Bergholz"
-    contact.email = "email2"
-    contact.phone = "fone2"
-    
-    getRepository(Product).save(product)
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <div style={{ display: 'flex' }}>
+                    <input
+                        type="text"
+                        value={message}
+                        placeholder={"sql request"}
+                        onChange={({ target: { value } }) => setMessage(value)}
+                    />
+                    <button type="button" onClick={() => send(message)}>
+                        Send
+                    </button>
+                </div>
+                <div>
+                    {JSON.stringify(responses, null, 2)}
+                </div>
+            </header>
+            <section style={{ padding: "50px 0" }}>
+                <input
+                    type="text"
+                    value={productName}
+                    placeholder={"productName"}
+                    onChange={(e) => setProductName(e.target.value)}
+                />
+                <input
+                    type="number"
+                    value={productPrice}
+                    placeholder={"productPrice"}
+                    onChange={(e) => setProductPrice(e.target.value)}
+                />
+                <button onClick={newProduct}>new product</button>
 
-    setProducts(p => [ ...p, product ])
-    setProductName("")
-    setProductPrice("")
-  }
+                <div>
+                    <p style={{background: "white"}}>Você clicou {count} vezes</p>
+                    <button onClick={() => setCount(count + 1)}>
+                    Clique aqui
+                    </button>
+                </div>
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div style={{ display: 'flex' }}>
-          <input
-            type="text"
-            value={message}
-            onChange={({ target: { value } }) => setMessage(value)}
-          />
-          <button type="button" onClick={() => send(message)}>
-            Send
-          </button>
+                <hr />
+                <button onClick={() => {
+                    sendAsync("select * from product").then((result: any[]) => {
+                        result.forEach(e => {
+                            setProducts(p => [ ...p, e])
+                        });
+                    })
+                }}>
+                    Update Table
+                </button>
+
+                {products.map((product, index) => 
+                    <div key={index}>
+                        <span>{product.name}</span>
+                        <span>{` ${product.price}`}</span>
+                        <br />
+                    </div>
+                )}
+            </section>
         </div>
-        <div>
-          {JSON.stringify(responses, null, 2)}
-        </div>
-      </header>
-      <section style={{ padding: "50px 0" }}>
-        <input
-          type="text"
-          value={productName}
-          placeholder={"productName"}
-          onChange={(e) => setProductName(e.target.value)}
-        />
-        <input
-          type="number"
-          value={productPrice}
-          placeholder={"productPrice"}
-          onChange={(e) => setProductPrice(e.target.value)}
-        />
-        <button onClick={newProduct}>new product</button>
-        <hr />
-        {products.map((product, index) => 
-          <div key={index}>
-            <span>{product.name}</span>
-            <span>{` ${product.price}`}</span>
-            <br />
-          </div>
-        )}
-      </section>
-    </div>
-  );
+    );
 }
 
 export default App;
