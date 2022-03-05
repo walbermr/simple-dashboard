@@ -1,11 +1,11 @@
 import { ConnectionOptions } from "typeorm";
-import Entities from "../entities/entities";
+import Entities from "../database/typeorm/entities/entities";
 
 const ConnectionObject: ConnectionOptions = {
     type: "sqlite",
     synchronize: true,
     logging: true,
-    database: "db.sqlite3",
+    database: "userdatabase.db",
     entities: Entities
 }
 

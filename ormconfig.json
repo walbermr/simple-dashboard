@@ -3,8 +3,14 @@
     "synchronize": true,
     "logging": true,
     "logger": "teste",
-    "database": "db.sqlite3",
+    "database": "userdatabase.db",
     "entities": [
-        "src/entities/*.ts"
-    ]
+        "src/database/typeorm/entities/**/*.ts"
+    ],
+    "migrations": [
+        "src/database/typeorm/migration/**/*.ts"
+    ],
+    "cli": {
+        "migrationsDir": "src/database/typeorm/migration"
+    }
 }

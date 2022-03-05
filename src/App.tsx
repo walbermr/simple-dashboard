@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import "reflect-metadata";
 import { createConnection, getRepository } from 'typeorm';
 import './App.css';
-import { Contact } from './entities/Contact';
-import { Product } from './entities/Product';
-import logo from './logo.svg';
-import { sendAsync } from './message-control/renderer';
+import { Contact } from './database/typeorm/entities/Contact';
+import { Product } from './database/typeorm/entities/Product';
 import ConnectionObject from './utils/connectionObject';
+
+import BuildHeader from './components/BuildHeader';
+import DrawProductTable from './components/DrawProductTable';
+
+import { getProductTable, newProduct } from './database/helpers/Product';
 
 function App() {
 
@@ -22,56 +25,11 @@ function App() {
         createConnection(ConnectionObject).catch(console.error)
     }, [])
 
-    function send(sql: string) {
-        sendAsync(sql).then((result: any[]) => {
-            console.log({ result })
-            setResponses(result)
-        });
-    }
-
-    async function newProduct() {
-        console.log({
-            productName,
-            productPrice
-        })
-        
-        const product = new Product()
-        product.name = productName;
-        product.price = Number(productPrice);
-
-        const contact = new Contact()
-        contact.first_name = "Daniel"
-        contact.last_name = "Bergholz"
-        contact.email = "email2"
-        contact.phone = "fone2"
-        
-        getRepository(Product).save(product)
-
-        setProducts(p => [ ...p, product ])
-        setProductName("")
-        setProductPrice("")
-    }
-    
 
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <div style={{ display: 'flex' }}>
-                    <input
-                        type="text"
-                        value={message}
-                        placeholder={"sql request"}
-                        onChange={({ target: { value } }) => setMessage(value)}
-                    />
-                    <button type="button" onClick={() => send(message)}>
-                        Send
-                    </button>
-                </div>
-                <div>
-                    {JSON.stringify(responses, null, 2)}
-                </div>
-            </header>
+            <BuildHeader messageState={[message, setMessage]} responsesState={[responses, setResponses]}></BuildHeader>
+
             <section style={{ padding: "50px 0" }}>
                 <input
                     type="text"
@@ -85,33 +43,30 @@ function App() {
                     placeholder={"productPrice"}
                     onChange={(e) => setProductPrice(e.target.value)}
                 />
-                <button onClick={newProduct}>new product</button>
+                <button onClick={() => {
+                    let newProd = newProduct(productName, productPrice);
+                    setProductName("")
+                    setProductPrice("")
+                    setProducts((p: any) => [...p, newProd]);
+                }}>new product</button>
 
                 <div>
-                    <p style={{background: "white"}}>Você clicou {count} vezes</p>
+                    <p style={{ background: "white" }}>Você clicou {count} vezes</p>
                     <button onClick={() => setCount(count + 1)}>
-                    Clique aqui
+                        Clique aqui
                     </button>
                 </div>
 
                 <hr />
-                <button onClick={() => {
-                    sendAsync("select * from product").then((result: any[]) => {
-                        result.forEach(e => {
-                            setProducts(p => [ ...p, e])
-                        });
-                    })
-                }}>
-                    Update Table
-                </button>
+                <div>
+                    <button onClick={() => getProductTable().then(
+                        (result: any[]) => { setProducts(result) }
+                    )}>
+                        Update Table
+                    </button>
+                </div>
 
-                {products.map((product, index) => 
-                    <div key={index}>
-                        <span>{product.name}</span>
-                        <span>{` ${product.price}`}</span>
-                        <br />
-                    </div>
-                )}
+                <DrawProductTable products={products}></DrawProductTable>
             </section>
         </div>
     );
