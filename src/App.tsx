@@ -7,9 +7,11 @@ import { Product } from './database/typeorm/entities/Product';
 import ConnectionObject from './utils/connectionObject';
 
 import BuildHeader from './components/BuildHeader';
-import DrawProductTable from './components/DrawProductTable';
+import {DrawProductTable, RemoveProductTableEntry, AddProductTableEntry, UpdateProductTable} from './components/ProductTable';
 
 import { getProductTable, newProduct } from './database/helpers/Product';
+
+import Button from 'react-bootstrap/Button'
 
 function App() {
 
@@ -23,6 +25,7 @@ function App() {
 
     useEffect(() => {
         createConnection(ConnectionObject).catch(console.error)
+        // UpdateProductTable(setProducts);
     }, [])
 
 
@@ -37,18 +40,19 @@ function App() {
                     placeholder={"productName"}
                     onChange={(e) => setProductName(e.target.value)}
                 />
+                
                 <input
                     type="number"
                     value={productPrice}
                     placeholder={"productPrice"}
                     onChange={(e) => setProductPrice(e.target.value)}
                 />
-                <button onClick={() => {
-                    let newProd = newProduct(productName, productPrice);
-                    setProductName("")
-                    setProductPrice("")
-                    setProducts((p: any) => [...p, newProd]);
-                }}>new product</button>
+
+                <button onClick={() => { setProducts((p: any) => {
+                    setProductName("");
+                    setProductPrice("");
+                    return AddProductTableEntry(productName, productPrice, p);
+                })}}>new product</button>
 
                 <div>
                     <p style={{ background: "white" }}>Você clicou {count} vezes</p>
@@ -56,17 +60,13 @@ function App() {
                         Clique aqui
                     </button>
                 </div>
-
+                
                 <hr />
                 <div>
-                    <button onClick={() => getProductTable().then(
-                        (result: any[]) => { setProducts(result) }
-                    )}>
-                        Update Table
-                    </button>
+                    <Button variant="primary" onClick={() => UpdateProductTable(setProducts)}>Update Table</Button>
                 </div>
 
-                <DrawProductTable products={products}></DrawProductTable>
+                <DrawProductTable products={products} setProducts={setProducts} />
             </section>
         </div>
     );

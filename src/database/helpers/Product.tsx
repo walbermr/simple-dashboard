@@ -6,7 +6,11 @@ import { Product } from '../../database/typeorm/entities/Product';
 import { sendAsync } from '../../message-control/renderer';
 
 function getProductTable() {
-    return sendAsync("select * from product")
+    return sendAsync("SELECT * FROM product")
+}
+
+function deleteProduct(id: any){
+    return sendAsync(`DELETE FROM product WHERE id==${id}`)
 }
 
 async function saveProduct(product: Product) {
@@ -22,4 +26,4 @@ function newProduct(name: any, price: any) {
     return product
 }
 
-export { getProductTable, newProduct }
+export { getProductTable, newProduct, deleteProduct }
