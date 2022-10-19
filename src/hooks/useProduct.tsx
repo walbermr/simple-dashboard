@@ -102,7 +102,7 @@ export function ProductProvider({ children }: ProductProviderProps) {
 
     } catch (error) {
       console.log(error)
-      toast.success("Falha ao editar produto!");
+      toast.error("Falha ao editar produto!");
 
     }finally {
       toast.dismiss(toastId);
