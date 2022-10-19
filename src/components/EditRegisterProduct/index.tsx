@@ -18,7 +18,7 @@ export function EditRegisterProduct() {
   useEffect(() => {
     setName(editProduct.name);
     setPrice(String(editProduct.price));
-  }, [isEditRegisterProductModalOpen]);
+  }, [isEditRegisterProductModalOpen, editProduct.name, editProduct.price]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
