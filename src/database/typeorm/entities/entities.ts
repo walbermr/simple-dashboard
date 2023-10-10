@@ -1,9 +1,7 @@
-import { Contact } from "./Contact";
-import { Product } from "./Product";
+import { Operation } from "./Operation";
 
 const Entities = [
-    Product,
-    Contact
+    Operation
 ]
 
 export default Entities

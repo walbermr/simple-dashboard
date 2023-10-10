@@ -9,27 +9,28 @@ import Modal from "react-modal";
 
 import { ModalProvider } from "./hooks/useModal";
 import { GlobalStyle } from "./styles/global";
-import { ProductProvider } from "./hooks/useProduct";
-import { EditRegisterProduct } from "./components/EditRegisterProduct";
+import { OperationProvider } from "./hooks/useOperation";
+import { EditRegisterOperation } from "./components/EditRegisterOperation";
+import { NewRegisterOperation } from "./components/NewRegisterOperation";
 
 Modal.setAppElement("#root");
 
 export function App() {
 
   return (
-    <ProductProvider>
+    <OperationProvider>
       <ModalProvider>
         <Header />
 
         <Dashboard />
 
-        <NewRegisterProduct />
-        <EditRegisterProduct />
+        <NewRegisterOperation />
+        <EditRegisterOperation />
 
         <GlobalStyle />
         <Toaster position="top-center" />
       </ModalProvider>
-    </ProductProvider>
+    </OperationProvider>
   );
 }
 

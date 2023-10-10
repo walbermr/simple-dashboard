@@ -7,6 +7,12 @@ interface ModalContextData {
   isEditRegisterProductModalOpen: boolean;
   OpenEditRegisterProductModal: () => void;
   CloseEditRegisterProductModal: () => void;
+  isNewRegisterOperationModalOpen: boolean;
+  OpenNewRegisterOperationModal: () => void;
+  CloseNewRegisterOperationModal: () => void;
+  isEditRegisterOperationModalOpen: boolean;
+  OpenEditRegisterOperationModal: () => void;
+  CloseEditRegisterOperationModal: () => void;
 }
 
 interface ModalProviderProps {
@@ -38,6 +44,28 @@ export function ModalProvider({ children }: ModalProviderProps) {
     setIsEditRegisterProductModalOpen(false);
   }
 
+  const [isNewRegisterOperationModalOpen, setIsNewRegisterOperationModalOpen] =
+    useState(false);
+
+  const [isEditRegisterOperationModalOpen, setIsEditRegisterOperationModalOpen] =
+    useState(false);
+
+  function OpenNewRegisterOperationModal() {
+    setIsNewRegisterOperationModalOpen(true);
+  }
+
+  function CloseNewRegisterOperationModal() {
+    setIsNewRegisterOperationModalOpen(false);
+  }
+
+  function OpenEditRegisterOperationModal() {
+    setIsEditRegisterOperationModalOpen(true);
+  }
+
+  function CloseEditRegisterOperationModal() {
+    setIsEditRegisterOperationModalOpen(false);
+  }
+
   return (
     <ModalContext.Provider
       value={{
@@ -47,6 +75,12 @@ export function ModalProvider({ children }: ModalProviderProps) {
         isEditRegisterProductModalOpen,
         OpenEditRegisterProductModal,
         CloseEditRegisterProductModal,
+        isNewRegisterOperationModalOpen,
+        OpenNewRegisterOperationModal,
+        CloseNewRegisterOperationModal,
+        isEditRegisterOperationModalOpen,
+        OpenEditRegisterOperationModal,
+        CloseEditRegisterOperationModal,
       }}
     >
       {children}

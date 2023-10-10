@@ -1,10 +1,10 @@
-import { ProductTable } from "../ProductTable";
+import { OperationTable } from "../OperationTable";
 import { Container } from "./styles";
 
 export function Dashboard(){
     return(
         <Container>
-            <ProductTable />
+            <OperationTable />
         </Container>
     )
 }
