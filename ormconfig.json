@@ -5,10 +5,10 @@
     "logger": "teste",
     "database": "userdatabase.db",
     "entities": [
-        "src/database/typeorm/entities/**/*.ts"
+        "src/database/typeorm/entities/*.ts"
     ],
     "migrations": [
-        "src/database/typeorm/migration/**/*.ts"
+        "src/database/typeorm/migration/*.ts"
     ],
     "cli": {
         "migrationsDir": "src/database/typeorm/migration"

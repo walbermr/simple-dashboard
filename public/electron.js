@@ -16,7 +16,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      devTools: false,
+      devTools: true,
     },
   });
   mainWindow.loadURL(
