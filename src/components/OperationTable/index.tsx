@@ -24,15 +24,28 @@ export function OperationTable() {
     SetOperationToBeEdit(operation)
   }
 
+  function formatDate(s: string){
+      return new Date(s).toLocaleDateString().toString();
+  }
+
+  function formatOperation(op: string){
+    return {
+      "buy": "Compra",
+      "sell": "Venda",
+    }[op]
+  }
+
   return (
     <Container>
       <table>
         <thead>
           <tr>
             <th>Ticker</th>
-            <th>Quantity</th>
-            <th>Price</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Tipo</th>
             <th>Broker</th>
+            <th>Data</th>
           </tr>
         </thead>
         <tbody>
@@ -41,7 +54,9 @@ export function OperationTable() {
               <td>{operation.ticker}</td>
               <td>{operation.quantity}</td>
               <td>{NumberFormatBRL(operation.price)}</td>
-              <td>{operation.broker}</td>
+              <td>{formatOperation(operation.operationType)}</td>
+              <td>{operation.broker}</td> 
+              <td>{formatDate(operation.date)}</td>
               <td className="td-icons">
                 <img
                   src={edit}

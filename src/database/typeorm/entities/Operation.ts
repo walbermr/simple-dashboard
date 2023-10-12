@@ -16,6 +16,12 @@ class Operation {
     price: number;
 
     @Column("text")
+    operationType: string;
+
+    @Column("date")
+    date: string;
+
+    @Column("text")
     broker: string;
 }
 

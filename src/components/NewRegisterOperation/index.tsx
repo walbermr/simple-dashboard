@@ -7,11 +7,19 @@ import { useModal } from "../../hooks/useModal";
 import { useOperations } from "../../hooks/useOperation";
 import { Container } from "./styles";
 
+import Dropdown from "../Dropdown";
+
 export function NewRegisterOperation() {
   const [ticker, setTicker] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [broker, setBroker] = useState("");
+  const [operationType, setOperationType] = useState("");
+  const [date, setDate] = useState("");
+  const options = [
+    "Compra", "Venda"
+  ];
+  const defaultOption = options[0];
 
   const { isNewRegisterOperationModalOpen, CloseNewRegisterOperationModal } =
     useModal();
@@ -24,7 +32,9 @@ export function NewRegisterOperation() {
       ticker,
       quantity,
       price,
+      operationType,
       broker,
+      date,
     };
 
     CreateNewOperation(data)
@@ -37,6 +47,7 @@ export function NewRegisterOperation() {
     setQuantity(0);
     setPrice(0);
     setBroker("");
+    setOperationType(defaultOption)
   }
 
   return (
@@ -67,24 +78,33 @@ export function NewRegisterOperation() {
         <input
           min={0}
           type="number"
-          placeholder="Price"
+          placeholder="Preço"
           onChange={(event) => setPrice(Number(event.target.value))}
           required
         />
         <input
           min={1}
           type="number"
-          placeholder="Quantity"
+          placeholder="Quantidade"
           onChange={(event) => setQuantity(Number(event.target.value))}
           required
         />
         <input
           type="text"
-          placeholder="Broker"
+          placeholder="Corretora"
           value={broker}
           onChange={(event) => setBroker(event.target.value)}
           required
         />
+        <input
+          type="date"
+          placeholder="Data"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
+          required
+        />
+
+        <Dropdown onChange={(event : any) => setOperationType(event) }/>
 
         <button type="submit">Register</button>
       </Container>

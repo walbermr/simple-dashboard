@@ -12,6 +12,10 @@ export function EditRegisterOperation() {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [broker, setBroker] = useState("");
+  const [operationType, setOperationType] = useState("");
+  const options = [
+    "Compra", "Venda"
+  ];
 
   const { isEditRegisterOperationModalOpen, CloseEditRegisterOperationModal } =
     useModal();
@@ -22,7 +26,8 @@ export function EditRegisterOperation() {
     setQuantity(String(editOperation.quantity));
     setPrice(String(editOperation.price));
     setBroker(editOperation.broker);
-  }, [isEditRegisterOperationModalOpen, editOperation.ticker, editOperation.quantity, editOperation.price, editOperation.broker]);
+    setOperationType(editOperation.operationType)
+  }, [isEditRegisterOperationModalOpen, editOperation.ticker, editOperation.quantity, editOperation.price, editOperation.broker, editOperation.operationType]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -32,6 +37,7 @@ export function EditRegisterOperation() {
       ticker: ticker,
       quantity: Number(quantity),
       price: Number(price),
+      operationType: operationType,
       broker: broker,
     };
 
