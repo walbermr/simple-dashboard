@@ -49,7 +49,9 @@ export function OperationTable() {
           </tr>
         </thead>
         <tbody>
-          {opList.map((operation) => (
+          {opList.sort((a: Operation, b: Operation) => {
+            return new Date(a.date) > new Date(b.date) ? 1 : -1;
+          }).map((operation) => (
             <tr key={operation.id}>
               <td>{operation.ticker}</td>
               <td>{operation.quantity}</td>
