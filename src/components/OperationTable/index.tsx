@@ -39,7 +39,7 @@ export function OperationTable() {
     const dateA = new Date(a.date)
     const dateB = new Date(b.date)
 
-    return dateA > dateB ? 1 : -1;
+    return dateA > dateB ? -1 : 1;
   }
 
   return (
