@@ -35,6 +35,13 @@ export function OperationTable() {
     }[op]
   }
 
+  function opSortFunction(a: Operation, b: Operation){
+    const dateA = new Date(a.date)
+    const dateB = new Date(b.date)
+
+    return dateA > dateB ? 1 : -1;
+  }
+
   return (
     <Container>
       <table>
@@ -49,9 +56,7 @@ export function OperationTable() {
           </tr>
         </thead>
         <tbody>
-          {opList.sort((a: Operation, b: Operation) => {
-            return new Date(a.date) > new Date(b.date) ? 1 : -1;
-          }).map((operation) => (
+          {opList.sort(opSortFunction).map((operation) => (
             <tr key={operation.id}>
               <td>{operation.ticker}</td>
               <td>{operation.quantity}</td>
