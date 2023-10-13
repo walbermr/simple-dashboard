@@ -12,10 +12,8 @@ export function EditRegisterOperation() {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [broker, setBroker] = useState("");
+  const [date, setDate] = useState("");
   const [operationType, setOperationType] = useState("");
-  const options = [
-    "Compra", "Venda"
-  ];
 
   const { isEditRegisterOperationModalOpen, CloseEditRegisterOperationModal } =
     useModal();
@@ -39,6 +37,7 @@ export function EditRegisterOperation() {
       price: Number(price),
       operationType: operationType,
       broker: broker,
+      date: date,
     };
 
     EditOperation(data);
@@ -69,7 +68,7 @@ export function EditRegisterOperation() {
           required
         />
         <input
-          min={0}
+          min={1}
           value={quantity}
           type="number"
           placeholder="Quantity"
@@ -78,6 +77,7 @@ export function EditRegisterOperation() {
         />
         <input
           min={0}
+          step={0.01}
           value={price}
           type="number"
           placeholder="Price"
@@ -87,8 +87,15 @@ export function EditRegisterOperation() {
         <input
           type="text"
           placeholder="Broker"
-          value={ticker}
+          value={broker}
           onChange={(event) => setBroker(event.target.value)}
+          required
+        />
+        <input
+          type="date"
+          placeholder="Data"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
           required
         />
 

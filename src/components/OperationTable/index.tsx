@@ -6,6 +6,8 @@ import { useOperations } from "../../hooks/useOperation";
 import { Operation } from "../../database/typeorm/entities/Operation";
 import { useModal } from "../../hooks/useModal";
 import { NumberFormatBRL } from "../../services/NumberFormatBRL";
+import { formatOperationType, opSortFunction } from "../../services/FormatOperationType";
+import { formatDate } from "../../services/FormatDate";
 
 export function OperationTable() {
   const { operations, DeleteOperation, SetOperationToBeEdit } = useOperations();
@@ -22,24 +24,6 @@ export function OperationTable() {
   function handleClickEdit(operation: Operation) {
     OpenEditRegisterOperationModal();
     SetOperationToBeEdit(operation)
-  }
-
-  function formatDate(s: string){
-      return new Date(s).toLocaleDateString().toString();
-  }
-
-  function formatOperation(op: string){
-    return {
-      "buy": "Compra",
-      "sell": "Venda",
-    }[op]
-  }
-
-  function opSortFunction(a: Operation, b: Operation){
-    const dateA = new Date(a.date)
-    const dateB = new Date(b.date)
-
-    return dateA > dateB ? -1 : 1;
   }
 
   return (
@@ -61,7 +45,7 @@ export function OperationTable() {
               <td>{operation.ticker}</td>
               <td>{operation.quantity}</td>
               <td>{NumberFormatBRL(operation.price)}</td>
-              <td>{formatOperation(operation.operationType)}</td>
+              <td>{formatOperationType(operation.operationType)}</td>
               <td>{operation.broker}</td> 
               <td>{formatDate(operation.date)}</td>
               <td className="td-icons">

@@ -78,6 +78,7 @@ export function NewRegisterOperation() {
         <input
           min={0}
           type="number"
+          step={0.01}
           placeholder="Preço"
           onChange={(event) => setPrice(Number(event.target.value))}
           required

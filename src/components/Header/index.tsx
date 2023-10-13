@@ -13,7 +13,15 @@ export function Header() {
           <img src={logo} alt="" />
           <h1>simple dashboard</h1>
         </div>
-        <button onClick={OpenNewRegisterOperationModal}>new opeation</button>
+        <div>
+          <a href="/dashboard"><button>Operações</button></a>
+        </div>
+        <div>
+          <a href="/"><button>Resumo</button></a>
+        </div>
+        <div>
+          <button onClick={OpenNewRegisterOperationModal}>Nova Operação</button>
+        </div>
       </Content>
     </Container>
   );
