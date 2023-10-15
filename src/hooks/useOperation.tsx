@@ -95,7 +95,7 @@ export function OperationProvider({ children }: OperationProviderProps) {
       );
 
       QueryResponse(
-        `UPDATE operation SET ticker = '${operation.ticker}', price = '${operation.price}', quantity = '${operation.quantity}', broker = '${operation.broker}', operationType = '${operation.operationType}', WHERE id==${operation.id}`
+        `UPDATE operation SET ticker = '${operation.ticker}', price = '${operation.price}', quantity = '${operation.quantity}', broker = '${operation.broker}', operationType = '${operation.operationType}', date = '${operation.date}', WHERE id=${operation.id}`
       );
       setOperations(updatedOperation);
       toast.success("Operação editado!");
