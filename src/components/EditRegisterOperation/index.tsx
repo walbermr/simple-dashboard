@@ -24,8 +24,18 @@ export function EditRegisterOperation() {
     setQuantity(String(editOperation.quantity));
     setPrice(String(editOperation.price));
     setBroker(editOperation.broker);
-    setOperationType(editOperation.operationType)
-  }, [isEditRegisterOperationModalOpen, editOperation.ticker, editOperation.quantity, editOperation.price, editOperation.broker, editOperation.operationType]);
+    setOperationType(editOperation.operationType);
+    setDate(editOperation.date);
+  }, [
+      isEditRegisterOperationModalOpen, 
+      editOperation.ticker, 
+      editOperation.quantity, 
+      editOperation.price, 
+      editOperation.broker, 
+      editOperation.operationType,
+      editOperation.date,
+    ]
+  );
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -62,7 +72,7 @@ export function EditRegisterOperation() {
 
         <input
           type="text"
-          placeholder="Ticker"
+          placeholder="Ativo"
           value={ticker}
           onChange={(event) => setTicker(event.target.value)}
           required

@@ -31,7 +31,7 @@ export function OperationTable() {
       <table>
         <thead>
           <tr>
-            <th>Ticker</th>
+            <th>Ativo</th>
             <th>Quantidade</th>
             <th>Preço</th>
             <th>Tipo</th>

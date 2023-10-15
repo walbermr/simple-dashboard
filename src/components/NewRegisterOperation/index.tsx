@@ -70,7 +70,7 @@ export function NewRegisterOperation() {
 
         <input
           type="text"
-          placeholder="Ticker"
+          placeholder="Ativo"
           value={ticker}
           onChange={(event) => setTicker(event.target.value)}
           required
