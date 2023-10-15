@@ -5,6 +5,7 @@ import { Container } from "./styles";
 import { useOperations } from '../../hooks/useOperation';
 import { opSortFunction } from '../../services/FormatOperationType';
 import { Operation } from '../../database/typeorm/entities/Operation';
+import { NumberFormatBRL } from '../../services/NumberFormatBRL';
 
 interface OperationHistory {
   opDate: Date[];
@@ -13,20 +14,13 @@ interface OperationHistory {
   sellPrice: number[];
   sellAmount: number[];
   opProfit: number[];
-}; // adicionar 
+}; // mover para processamento do bd
 
 interface Ticker {
   totalInvested: number,
   quantity: number,
   history: OperationHistory,
 };
-
-// const pieData = [
-//   { name: "Group A", value: 400 },
-//   { name: "Group B", value: 300 },
-//   { name: "Group C", value: 300 },
-//   { name: "Group D", value: 200 }
-// ];
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -87,7 +81,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`PV ${value}`}</text>
+      >{NumberFormatBRL(value)}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -95,7 +89,7 @@ const renderActiveShape = (props: any) => {
         textAnchor={textAnchor}
         fill="#999"
       >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`${(percent * 100).toFixed(2)}%`}
       </text>
     </g>
   );
