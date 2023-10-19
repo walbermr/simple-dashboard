@@ -7,9 +7,9 @@ import { ChartPage } from "../Report";
 
 export function Dashboard(){
     return(
-        <Container>
-            <ChartPage/>
-            <OperationTable/>
-        </Container>
+        <>
+        <ChartPage/>
+        <OperationTable/>
+        </>
     )
 }

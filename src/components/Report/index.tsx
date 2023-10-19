@@ -6,6 +6,7 @@ import { useOperations } from '../../hooks/useOperation';
 import { opSortFunction } from '../../services/FormatOperationType';
 import { Operation } from '../../database/typeorm/entities/Operation';
 import { NumberFormatBRL } from '../../services/NumberFormatBRL';
+import { Card, Row, Col } from 'react-bootstrap';
 
 interface OperationHistory {
   opDate: Date[];
@@ -115,7 +116,7 @@ function updatePortfolio(ops: Operation[], portfolio: {[key: string]: Ticker}) {
   let curr = firstDate;
   while (curr <= lastDate) {
     monthlyProfits[toMonthYearKey(curr)] = 0;
-    if (curr.getMonth() == 11) {
+    if (curr.getMonth() === 11) {
         curr = new Date(curr.getFullYear() + 1, 0, 1);
     } else {
         curr = new Date(curr.getFullYear(), curr.getMonth() + 1, 1);
@@ -245,28 +246,44 @@ export function ChartPage(){
 
   return (
     <Container>
-        <BarChart width={600} height={300} data={data}>
-            <Bar type="monotone" dataKey="profit" fill="#8884d8" />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="monthYear" />
-            <YAxis />
-            <Tooltip />
-        </BarChart>
+      <Row xs={1} md={2} className="g-4">
+        <Col key={1}>
+          <Card bg="dark" text="light">
+            <Card.Body>
+            <Card.Title>Lucro por Mês</Card.Title>
+              <BarChart width={480} height={300} data={data}>
+                <Bar type="monotone" dataKey="profit" fill="#8884d8" />
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <XAxis dataKey="monthYear" />
+                <YAxis />
+                <Tooltip />
+              </BarChart>
+            </Card.Body>
+          </Card>
+        </Col>
 
-        <PieChart width={900} height={300}>
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            data={pieData}
-            cx={300}
-            cy={200}
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-            onMouseEnter={onPieEnter}
-          />
-        </PieChart>
+        <Col key={2}>
+          <Card bg="dark" text="light" >
+            <Card.Body>
+              <Card.Title>Exposição por Ativo</Card.Title>
+              <PieChart width={900} height={300}>
+                <Pie
+                  activeIndex={activeIndex}
+                  activeShape={renderActiveShape}
+                  data={pieData}
+                  cx={260}
+                  cy={140}
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  onMouseEnter={onPieEnter}
+                />
+              </PieChart>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   );
 }

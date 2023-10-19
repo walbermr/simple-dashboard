@@ -10,8 +10,10 @@
         "@types/jest": "^26.0.15",
         "@types/node": "^16.4.1",
         "@types/react": "^18.0.0",
+        "bootstrap": "^5.3.2",
         "electron-is-dev": "^2.0.0",
         "react": "^18.2.0",
+        "react-bootstrap": "^2.9.0",
         "react-hot-toast": "^2.4.0",
         "react-modal": "^3.16.1",
         "react-router-dom": "^6.16.0",
@@ -56,6 +58,7 @@
     "devDependencies": {
         "@rescripts/cli": "^0.0.16",
         "@types/electron": "^1.6.10",
+        "@types/react-dom": "^18.2.14",
         "@types/react-modal": "^3.13.1",
         "@types/styled-components": "^5.1.26",
         "concurrently": "^6.2.0",
